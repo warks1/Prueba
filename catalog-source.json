@@ -1,0 +1,394 @@
+[
+  {
+    "artist": "a-ha",
+    "title": "Take On Me",
+    "year": 1985,
+    "genre": "Pop",
+    "country": "Noruega"
+  },
+  {
+    "artist": "Madonna",
+    "title": "Like a Prayer",
+    "year": 1989,
+    "genre": "Pop",
+    "country": "Estados Unidos"
+  },
+  {
+    "artist": "Michael Jackson",
+    "title": "Billie Jean",
+    "year": 1982,
+    "genre": "Pop",
+    "country": "Estados Unidos"
+  },
+  {
+    "artist": "Queen",
+    "title": "Radio Ga Ga",
+    "year": 1984,
+    "genre": "Rock",
+    "country": "Reino Unido"
+  },
+  {
+    "artist": "Bon Jovi",
+    "title": "Livin On A Prayer",
+    "year": 1986,
+    "genre": "Rock",
+    "country": "Estados Unidos"
+  },
+  {
+    "artist": "Europe",
+    "title": "The Final Countdown",
+    "year": 1986,
+    "genre": "Rock",
+    "country": "Suecia"
+  },
+  {
+    "artist": "Roxette",
+    "title": "The Look",
+    "year": 1988,
+    "genre": "Pop Rock",
+    "country": "Suecia"
+  },
+  {
+    "artist": "Mecano",
+    "title": "Hijo de la Luna",
+    "year": 1986,
+    "genre": "Pop",
+    "country": "España"
+  },
+  {
+    "artist": "Hombres G",
+    "title": "Devuélveme a mi chica",
+    "year": 1985,
+    "genre": "Pop Rock",
+    "country": "España"
+  },
+  {
+    "artist": "La Unión",
+    "title": "Lobo Hombre en París",
+    "year": 1984,
+    "genre": "Pop Rock",
+    "country": "España"
+  },
+  {
+    "artist": "Los Secretos",
+    "title": "Déjame",
+    "year": 1980,
+    "genre": "Pop Rock",
+    "country": "España"
+  },
+  {
+    "artist": "Alaska y Dinarama",
+    "title": "A quién le importa",
+    "year": 1986,
+    "genre": "Pop",
+    "country": "España"
+  },
+  {
+    "artist": "Nirvana",
+    "title": "Smells Like Teen Spirit",
+    "year": 1991,
+    "genre": "Rock",
+    "country": "Estados Unidos"
+  },
+  {
+    "artist": "Oasis",
+    "title": "Wonderwall",
+    "year": 1995,
+    "genre": "Britpop",
+    "country": "Reino Unido"
+  },
+  {
+    "artist": "Cher",
+    "title": "Believe",
+    "year": 1998,
+    "genre": "Dance Pop",
+    "country": "Estados Unidos"
+  },
+  {
+    "artist": "Aqua",
+    "title": "Barbie Girl",
+    "year": 1997,
+    "genre": "Eurodance",
+    "country": "Dinamarca"
+  },
+  {
+    "artist": "Ace of Base",
+    "title": "All That She Wants",
+    "year": 1992,
+    "genre": "Pop",
+    "country": "Suecia"
+  },
+  {
+    "artist": "Backstreet Boys",
+    "title": "I Want It That Way",
+    "year": 1999,
+    "genre": "Pop",
+    "country": "Estados Unidos"
+  },
+  {
+    "artist": "Spice Girls",
+    "title": "Wannabe",
+    "year": 1996,
+    "genre": "Pop",
+    "country": "Reino Unido"
+  },
+  {
+    "artist": "Britney Spears",
+    "title": "Baby One More Time",
+    "year": 1998,
+    "genre": "Pop",
+    "country": "Estados Unidos"
+  },
+  {
+    "artist": "Whitney Houston",
+    "title": "I Wanna Dance with Somebody",
+    "year": 1987,
+    "genre": "Pop",
+    "country": "Estados Unidos"
+  },
+  {
+    "artist": "Tina Turner",
+    "title": "The Best",
+    "year": 1989,
+    "genre": "Rock Pop",
+    "country": "Estados Unidos"
+  },
+  {
+    "artist": "U2",
+    "title": "With Or Without You",
+    "year": 1987,
+    "genre": "Rock",
+    "country": "Irlanda"
+  },
+  {
+    "artist": "The Police",
+    "title": "Every Breath You Take",
+    "year": 1983,
+    "genre": "Rock",
+    "country": "Reino Unido"
+  },
+  {
+    "artist": "Dire Straits",
+    "title": "Money For Nothing",
+    "year": 1985,
+    "genre": "Rock",
+    "country": "Reino Unido"
+  },
+  {
+    "artist": "Depeche Mode",
+    "title": "Enjoy the Silence",
+    "year": 1990,
+    "genre": "Synthpop",
+    "country": "Reino Unido"
+  },
+  {
+    "artist": "Pet Shop Boys",
+    "title": "Always On My Mind",
+    "year": 1987,
+    "genre": "Synthpop",
+    "country": "Reino Unido"
+  },
+  {
+    "artist": "Eurythmics",
+    "title": "Sweet Dreams",
+    "year": 1983,
+    "genre": "Synthpop",
+    "country": "Reino Unido"
+  },
+  {
+    "artist": "Modern Talking",
+    "title": "Youre My Heart Youre My Soul",
+    "year": 1984,
+    "genre": "Eurodisco",
+    "country": "Alemania"
+  },
+  {
+    "artist": "Wham",
+    "title": "Wake Me Up Before You Go Go",
+    "year": 1984,
+    "genre": "Pop",
+    "country": "Reino Unido"
+  },
+  {
+    "artist": "Cyndi Lauper",
+    "title": "Girls Just Want to Have Fun",
+    "year": 1983,
+    "genre": "Pop",
+    "country": "Estados Unidos"
+  },
+  {
+    "artist": "Rick Astley",
+    "title": "Never Gonna Give You Up",
+    "year": 1987,
+    "genre": "Dance Pop",
+    "country": "Reino Unido"
+  },
+  {
+    "artist": "Guns N Roses",
+    "title": "Sweet Child O Mine",
+    "year": 1987,
+    "genre": "Rock",
+    "country": "Estados Unidos"
+  },
+  {
+    "artist": "Metallica",
+    "title": "Enter Sandman",
+    "year": 1991,
+    "genre": "Metal",
+    "country": "Estados Unidos"
+  },
+  {
+    "artist": "REM",
+    "title": "Losing My Religion",
+    "year": 1991,
+    "genre": "Rock",
+    "country": "Estados Unidos"
+  },
+  {
+    "artist": "No Doubt",
+    "title": "Dont Speak",
+    "year": 1995,
+    "genre": "Pop Rock",
+    "country": "Estados Unidos"
+  },
+  {
+    "artist": "The Cranberries",
+    "title": "Zombie",
+    "year": 1994,
+    "genre": "Rock",
+    "country": "Irlanda"
+  },
+  {
+    "artist": "Blur",
+    "title": "Song 2",
+    "year": 1997,
+    "genre": "Britpop",
+    "country": "Reino Unido"
+  },
+  {
+    "artist": "Radiohead",
+    "title": "Creep",
+    "year": 1992,
+    "genre": "Rock",
+    "country": "Reino Unido"
+  },
+  {
+    "artist": "George Michael",
+    "title": "Faith",
+    "year": 1987,
+    "genre": "Pop",
+    "country": "Reino Unido"
+  },
+  {
+    "artist": "Phil Collins",
+    "title": "In the Air Tonight",
+    "year": 1981,
+    "genre": "Pop Rock",
+    "country": "Reino Unido"
+  },
+  {
+    "artist": "Prince",
+    "title": "Purple Rain",
+    "year": 1984,
+    "genre": "Pop Rock",
+    "country": "Estados Unidos"
+  },
+  {
+    "artist": "Bruce Springsteen",
+    "title": "Dancing In the Dark",
+    "year": 1984,
+    "genre": "Rock",
+    "country": "Estados Unidos"
+  },
+  {
+    "artist": "Celine Dion",
+    "title": "My Heart Will Go On",
+    "year": 1997,
+    "genre": "Pop",
+    "country": "Canadá"
+  },
+  {
+    "artist": "Mariah Carey",
+    "title": "Hero",
+    "year": 1993,
+    "genre": "Pop",
+    "country": "Estados Unidos"
+  },
+  {
+    "artist": "Los Rodríguez",
+    "title": "Sin documentos",
+    "year": 1993,
+    "genre": "Rock",
+    "country": "España"
+  },
+  {
+    "artist": "Alejandro Sanz",
+    "title": "Corazón Partío",
+    "year": 1997,
+    "genre": "Pop",
+    "country": "España"
+  },
+  {
+    "artist": "Jarabe de Palo",
+    "title": "La Flaca",
+    "year": 1996,
+    "genre": "Pop Rock",
+    "country": "España"
+  },
+  {
+    "artist": "Estopa",
+    "title": "La raja de tu falda",
+    "year": 1999,
+    "genre": "Pop Rock",
+    "country": "España"
+  },
+  {
+    "artist": "Chayanne",
+    "title": "Torero",
+    "year": 1998,
+    "genre": "Latino",
+    "country": "Puerto Rico"
+  },
+  {
+    "artist": "Gloria Estefan",
+    "title": "Conga",
+    "year": 1985,
+    "genre": "Latin Pop",
+    "country": "Cuba"
+  },
+  {
+    "artist": "Technotronic",
+    "title": "Pump Up The Jam",
+    "year": 1989,
+    "genre": "Dance",
+    "country": "Bélgica"
+  },
+  {
+    "artist": "Snap",
+    "title": "Rhythm Is a Dancer",
+    "year": 1992,
+    "genre": "Eurodance",
+    "country": "Alemania"
+  },
+  {
+    "artist": "2 Unlimited",
+    "title": "No Limit",
+    "year": 1993,
+    "genre": "Eurodance",
+    "country": "Países Bajos"
+  },
+  {
+    "artist": "Corona",
+    "title": "The Rhythm of the Night",
+    "year": 1993,
+    "genre": "Eurodance",
+    "country": "Italia"
+  },
+  {
+    "artist": "Scorpions",
+    "title": "Wind Of Change",
+    "year": 1990,
+    "genre": "Rock",
+    "country": "Alemania"
+  }
+]

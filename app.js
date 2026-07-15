@@ -1,10 +1,10 @@
 /* DIME QUIÉN CANTA — FINAL BETA
    Real music previews via Apple/iTunes Search API JSONP. No commercial audio is bundled. */
-const BUILD='FINAL-BETA-5.2-AUDIO-FIX';
+const BUILD='V6.0-STABLE-AUDIO-CORE';
 const $=s=>document.querySelector(s), $$=s=>Array.from(document.querySelectorAll(s));
 const screens=['Intro','Home','Modes','Game','Results','Profile','Career','Collection','Events','Shop','Ranking','Settings'];
 const storeKey='dqc_final_beta_v5';
-const state={screen:'Intro',player:null,mode:null,round:0,score:0,correct:0,streak:0,bestStreak:0,answers:[],current:null,timer:null,timeLeft:10,clip:10,locked:false,used:{fifty:false,replay:false,time:false},dailySeed:new Date().toISOString().slice(0,10),settings:{sound:true,vibration:true,animations:true,contrast:false},usedSongIds:new Set(),audioUnlocked:false};
+const state={screen:'Intro',player:null,mode:null,round:0,score:0,correct:0,streak:0,bestStreak:0,answers:[],current:null,timer:null,timeLeft:10,clip:10,locked:false,used:{fifty:false,replay:false,time:false},dailySeed:new Date().toISOString().slice(0,10),settings:{sound:true,vibration:true,animations:true,contrast:false},usedSongIds:new Set(),audioUnlocked:false,audioCatalog:[],catalogReady:false,catalogPromise:null,nextPrepared:null};
 const defaultPlayer={name:'Invitado',level:1,xp:0,coins:650,gems:35,rank:'Aficionado',prestige:0,bestScore:0,totalGames:0,totalCorrect:0,totalSongs:0,bestStreak:0,perfectGames:0,club:'Club Retro',theme:'Neón Original',achievements:[],collection:{},history:[],shop:['Neón Original'],lastDaily:null};
 function load(){try{state.player={...defaultPlayer,...JSON.parse(localStorage.getItem(storeKey)||'{}')};}catch{state.player={...defaultPlayer}};if(!state.player.collection)state.player.collection={};if(!state.player.achievements)state.player.achievements=[];if(!state.player.shop)state.player.shop=['Neón Original'];save();}
 function save(){localStorage.setItem(storeKey,JSON.stringify(state.player));renderTop();}
@@ -37,61 +37,63 @@ function renderHome(){const m=$('#mainMenu');m.innerHTML=menu.map(x=>`<button cl
 function renderModes(){const g=$('#modesGrid');g.innerHTML=modes.map(m=>`<article class="card"><span class="chip">${m.icon} ${m.clip}s</span><h3>${m.name}</h3><p>${m.desc}</p><button class="primary" data-mode="${m.id}">Jugar</button></article>`).join('');$$('[data-mode]').forEach(b=>b.onclick=()=>startGame(b.dataset.mode));}
 function pickCatalog(mode){let arr=[...catalog];if(mode.decade)arr=arr.filter(s=>s.decade===mode.decade);if(mode.daily){let seed=state.dailySeed.split('-').join('');arr=arr.filter((_,i)=>(i+Number(seed.slice(-2)))%3!==0)}return shuffle(arr);}
 function shuffle(a){return a.map(v=>[Math.random(),v]).sort((x,y)=>x[0]-y[0]).map(x=>x[1])}
-function startGame(id){unlockAudioGesture();state.mode=modes.find(m=>m.id===id)||modes[0];state.round=0;state.score=0;state.correct=0;state.streak=0;state.bestStreak=0;state.usedSongIds=new Set();state.lives=state.mode.lives||3;state.catalog=pickCatalog(state.mode);state.audioUnlocked=true;show('Game');nextRound();}
+function startGame(id){unlockAudioGesture();ensureAudioCatalog(false);state.mode=modes.find(m=>m.id===id)||modes[0];state.round=0;state.score=0;state.correct=0;state.streak=0;state.bestStreak=0;state.usedSongIds=new Set();state.lives=state.mode.lives||3;state.catalog=pickCatalog(state.mode);state.audioUnlocked=true;show('Game');nextRound();}
 function unlockAudioGesture(){try{const AC=window.AudioContext||window.webkitAudioContext;if(AC){state.audioCtx=state.audioCtx||new AC();state.audioCtx.resume?.();}}catch{}try{const a=$('#audio');if(a.dataset.unlocked==='1')return;a.muted=true;a.loop=true;a.src='data:audio/wav;base64,UklGRjQAAABXQVZFZm10IBAAAAABAAEAESsAACJWAAACABAAZGF0YRAAAAAAAAAAAAAAAAAAAAAA';const p=a.play();if(p&&p.then)p.then(()=>{a.dataset.unlocked='1';a.loop=false;a.muted=false;}).catch(()=>{a.loop=false;a.muted=false;});}catch{}}
 function nextRound(){clearRound();state.round++;state.used={fifty:false,replay:false,time:false};if(state.round>state.mode.rounds || state.lives<=0)return endGame();$('#modeName').textContent=state.mode.name;$('#roundTitle').textContent=`Ronda ${state.round}/${state.mode.rounds}${state.mode.lives?' · ❤️ '+state.lives:''}`;$('#score').textContent=state.score;$('#answers').innerHTML='';$('#reveal').classList.add('hidden');$('#textAnswerBox').classList.add('hidden');$('#vinyl').classList.remove('playing');setStatus('Buscando preview oficial real…');loadRealSong(0);}
 function clearRound(){clearInterval(state.timer);state.locked=false;state.timeLeft=state.mode.clip;updateTimer();const a=$('#audio');a.pause();a.loop=false;}
 function setStatus(t){$('#statusText').textContent=t}
+async function ensureAudioCatalog(force=false){
+  if(state.catalogReady&&!force)return state.audioCatalog;
+  if(state.catalogPromise&&!force)return state.catalogPromise;
+  state.catalogPromise=(async()=>{
+    try{
+      const res=await fetch(`catalog-cache.json?v=${force?Date.now():BUILD}`,{cache:'no-store'});
+      if(!res.ok)throw new Error(`cache ${res.status}`);
+      const data=await res.json();
+      const tracks=(data.tracks||[]).filter(t=>t.previewUrl&&t.artist&&t.title);
+      if(!tracks.length)throw new Error('catálogo vacío');
+      state.audioCatalog=tracks;state.catalogReady=true;
+      return tracks;
+    }catch(err){
+      console.warn('Catálogo estático no disponible; usando recuperación directa',err);
+      state.audioCatalog=[];state.catalogReady=false;
+      return [];
+    }finally{state.catalogPromise=null}
+  })();
+  return state.catalogPromise;
+}
 async function loadRealSong(attempt=0){
-  const MAX_ATTEMPTS=18;
-  if(attempt>=MAX_ATTEMPTS){
-    state.locked=true;
-    setStatus('No se pudo conectar con el catálogo musical. Comprueba la conexión y pulsa Replay para reintentar.');
-    $('#answers').innerHTML='<button class="primary" id="retryCatalog">Reintentar canción</button>';
-    $('#retryCatalog').onclick=()=>{state.locked=false;state.catalog=pickCatalog(state.mode);loadRealSong(0)};
-    return;
+  const retry=$('#retryCatalog');retry?.classList.add('hidden');
+  if(attempt===0)setStatus('Preparando canción validada…');
+  const cached=await ensureAudioCatalog(false);
+  let candidates=cached.filter(t=>!state.usedSongIds.has(String(t.trackId||`${t.artist}-${t.title}`)));
+  if(state.mode?.decade)candidates=candidates.filter(t=>String(t.year||'').startsWith(state.mode.decade==='80'?'198':'199'));
+  if(candidates.length){
+    const t=candidates[Math.floor(Math.random()*candidates.length)];
+    const id=String(t.trackId||`${t.artist}-${t.title}`);state.usedSongIds.add(id);
+    state.current={id,artist:t.artist,title:t.title,year:Number(t.year)||1990,decade:(Number(t.year)||1990)<1990?'80':'90',genre:t.genre||'Música',country:t.country||'',previewUrl:t.previewUrl,artwork:t.artwork||''};
+    return prepareAudio(0);
   }
-  if(!state.catalog?.length) state.catalog=pickCatalog(state.mode);
-  let song=state.catalog.shift();
-  if(!song || state.usedSongIds.has(song.id)) return loadRealSong(attempt+1);
-  try{
-    const item=await itunesSearch(song);
-    if(!item?.previewUrl) return loadRealSong(attempt+1);
-    state.usedSongIds.add(song.id);
-    state.current={...song,previewUrl:item.previewUrl,artwork:item.artworkUrl100,providerArtist:item.artistName,providerTitle:item.trackName};
-    prepareAudio(0);
-  }catch(e){
-    console.warn('Catálogo musical:',e);
-    setTimeout(()=>loadRealSong(attempt+1),150);
+  if(attempt<10){
+    const song=state.catalog.shift()||shuffle(catalog)[attempt%catalog.length];
+    try{
+      const item=await itunesJsonp(song,'ES');
+      if(item?.previewUrl){state.current={...song,previewUrl:item.previewUrl,artwork:item.artworkUrl100,providerArtist:item.artistName,providerTitle:item.trackName};return prepareAudio(0);}
+    }catch(e){console.warn('Recuperación directa',e)}
+    return setTimeout(()=>loadRealSong(attempt+1),180);
   }
+  clearInterval(state.timer);$('#vinyl').classList.remove('playing');
+  setStatus('El catálogo aún no está preparado. Ejecuta “Actualizar catálogo musical” en GitHub Actions y vuelve a intentarlo.');
+  retry?.classList.remove('hidden');
 }
 let jsonpId=0;
 function chooseBest(items,song){
-  const valid=(items||[]).filter(r=>r.previewUrl);
-  const artist=norm(song.artist), title=norm(song.title);
-  return valid.find(r=>norm(r.artistName)===artist && norm(r.trackName).includes(title))
-    || valid.find(r=>norm(r.artistName).includes(artist.split(' ')[0]) && norm(r.trackName).includes(title.split(' ')[0]))
-    || valid[0] || null;
+  const valid=(items||[]).filter(r=>r.previewUrl),artist=norm(song.artist),title=norm(song.title);
+  return valid.find(r=>norm(r.artistName)===artist&&norm(r.trackName).includes(title))||valid.find(r=>norm(r.artistName).includes(artist.split(' ')[0])&&norm(r.trackName).includes(title.split(' ')[0]))||valid[0]||null;
 }
-async function itunesSearch(song){
-  const term=encodeURIComponent(`${song.artist} ${song.title}`);
-  const stores=['ES','US','GB'];
-  for(const country of stores){
-    const url=`https://itunes.apple.com/search?term=${term}&media=music&entity=song&limit=12&country=${country}`;
-    try{
-      const controller=new AbortController();
-      const timer=setTimeout(()=>controller.abort(),7000);
-      const res=await fetch(url,{mode:'cors',cache:'no-store',signal:controller.signal});
-      clearTimeout(timer);
-      if(res.ok){const item=chooseBest((await res.json()).results,song);if(item)return item;}
-    }catch(e){}
-  }
-  return itunesJsonp(song,'ES');
-}
-function itunesJsonp(song,country){return new Promise((resolve,reject)=>{
-  const cb='dqc_jsonp_'+(++jsonpId),term=encodeURIComponent(`${song.artist} ${song.title}`);
-  const script=document.createElement('script');
-  const timeout=setTimeout(()=>{cleanup();reject(new Error('timeout'))},8000);
+function itunesJsonp(song,country='ES'){return new Promise((resolve,reject)=>{
+  const cb='dqc_jsonp_'+(++jsonpId),term=encodeURIComponent(`${song.artist} ${song.title}`),script=document.createElement('script');
+  const timeout=setTimeout(()=>{cleanup();reject(new Error('timeout'))},9000);
   function cleanup(){clearTimeout(timeout);try{delete window[cb]}catch{};script.remove()}
   window[cb]=data=>{const item=chooseBest(data?.results,song);cleanup();resolve(item)};
   script.onerror=()=>{cleanup();reject(new Error('jsonp'))};
@@ -124,6 +126,6 @@ function renderSettings(){$('#settingsPanel').innerHTML=['sound','vibration','an
 function useFifty(){if(state.used.fifty||state.mode.noPower)return;state.used.fifty=true;let wrong=$$('.answer').filter(b=>!b.classList.contains('correct')&&norm(b.dataset.answer)!==norm(getCorrectValue(state.questionType,state.current)));wrong.slice(0,2).forEach(b=>b.classList.add('disabled'))}
 function useReplay(){if(state.used.replay||state.mode.noPower)return;state.used.replay=true;state.locked=false;clearInterval(state.timer);$('#audio').currentTime=Math.max(0,$('#audio').currentTime-2);$('#audio').play();startTimer();}
 function useTime(){if(state.used.time||state.mode.noPower)return;state.used.time=true;state.timeLeft+=5;state.player.coins=Math.max(0,state.player.coins-10);save();}
-function bind(){ $('#enterBtn').onclick=()=>{unlockAudioGesture();show('Home')};$('#homeBtn').onclick=()=>show('Home');$$('[data-quick]').forEach(b=>b.onclick=()=>startGame(b.dataset.quick));$('#dailyBtn').onclick=()=>startGame('daily');$('#againBtn').onclick=()=>startGame(state.mode?.id||'classic');$('#backHomeBtn').onclick=()=>show('Home');$('#fiftyBtn').onclick=useFifty;$('#replayBtn').onclick=useReplay;$('#timeBtn').onclick=useTime;$('#sendTextAnswer').onclick=()=>answer($('#textAnswer').value);$('#textAnswer').addEventListener('keydown',e=>{if(e.key==='Enter')answer($('#textAnswer').value)});}
+function bind(){ $('#enterBtn').onclick=()=>{unlockAudioGesture();ensureAudioCatalog(false);show('Home')};$('#homeBtn').onclick=()=>show('Home');$$('[data-quick]').forEach(b=>b.onclick=()=>startGame(b.dataset.quick));$('#dailyBtn').onclick=()=>startGame('daily');$('#againBtn').onclick=()=>startGame(state.mode?.id||'classic');$('#backHomeBtn').onclick=()=>show('Home');$('#fiftyBtn').onclick=useFifty;$('#replayBtn').onclick=useReplay;$('#timeBtn').onclick=useTime;$('#retryCatalog').onclick=()=>{state.catalog=shuffle(catalog);state.catalogReady=false;ensureAudioCatalog(true).finally(()=>loadRealSong(0))};$('#sendTextAnswer').onclick=()=>answer($('#textAnswer').value);$('#textAnswer').addEventListener('keydown',e=>{if(e.key==='Enter')answer($('#textAnswer').value)});}
 if('serviceWorker' in navigator){navigator.serviceWorker.getRegistrations?.().then(rs=>rs.forEach(r=>r.unregister()));}
-load();bind();show('Intro');console.log(BUILD);
+load();bind();ensureAudioCatalog(false);show('Intro');console.log(BUILD);

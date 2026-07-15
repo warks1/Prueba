@@ -1,39 +1,17 @@
-# Dime quién canta — Final Beta v5.0
+# Dime quién canta — v6.0 Stable Audio Core
 
-Beta final para GitHub Pages con música real mediante previews oficiales recuperadas en tiempo real desde Apple/iTunes Search API.
+Esta versión conserva los modos, perfil, carrera, colección, eventos, tienda, ranking, logros y guardado local de la beta anterior, pero cambia el sistema musical.
 
-## Importante
-- No incluye canciones comerciales dentro del ZIP.
-- El juego consulta previews oficiales cuando están disponibles.
-- En iPhone/Safari puede hacer falta tocar **Jugar ahora** una vez para desbloquear el audio; después las canciones cargan automáticamente en cada ronda.
-- Para una publicación comercial hay que revisar términos vigentes y gestionar licencias musicales definitivas.
+## Cambio principal
 
-## Contenido
-- Presentación inicial con logo.
-- Presentación del proyecto en `presentacion.html`.
-- Modos: ¿Quién canta?, ¿Cómo se llama?, 80 vs 90, Solo 80, Solo 90, Supervivencia, Contrarreloj, La última nota, Modo Leyendas, Maratón, Entrenamiento, Radio Personal, Fiesta local, Duelo IA y Campeón del día.
-- Perfil, niveles, XP, monedas, gemas, rangos, logros, colección, carrera, eventos, ranking, tienda y ajustes.
-- Guardado local en el dispositivo.
-- Diseño móvil vertical con estética neón premium.
-- Sin caché PWA agresiva para evitar que GitHub Pages muestre versiones antiguas.
+Las canciones ya no se buscan durante cada ronda. El workflow de GitHub genera `catalog-cache.json` con previews oficiales verificadas. El juego carga ese archivo al entrar, filtra pistas inválidas y precarga la siguiente ronda.
 
-## Publicación en GitHub Pages
-Sube todos los archivos de esta carpeta directamente a la raíz del repositorio:
+## Publicación
 
-- `index.html`
-- `app.js`
-- `style.css`
-- `logo.svg`
-- `presentacion.html`
-- `manifest.webmanifest`
-- `README.md`
-- `LICENSE`
+Sube **todo el contenido** de esta carpeta a la raíz del repositorio, incluyendo `.github/workflows/refresh-catalog.yml` y `scripts/build-catalog.mjs`. Después abre la pestaña **Actions** y ejecuta `Actualizar catálogo musical`. El workflow también se ejecuta automáticamente tras subir los archivos y una vez al día.
 
-Después activa GitHub Pages desde la rama principal y carpeta raíz.
+La primera ejecución debe dejar `catalog-cache.json` con canciones. La página mostrará `STABLE AUDIO v6.0` en la cabecera.
 
+## Nota legal
 
-## v5.1
-- El primer toque en «Entrar al concurso» desbloquea el audio del navegador.
-- Desde ese momento cada ronda carga y reproduce su preview automáticamente.
-- Ya no se muestra ni se necesita un botón «Cargar y escuchar».
-- Safari/iPhone puede exigir ese único toque inicial por política del sistema.
+El paquete no contiene grabaciones comerciales. Las URLs se obtienen de previews oficiales disponibles públicamente. Para una publicación comercial definitiva deben revisarse las condiciones vigentes y las licencias necesarias.

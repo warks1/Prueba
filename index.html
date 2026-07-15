@@ -1,97 +1,60 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <title>Dime quién canta — Final Beta</title>
-  <meta name="theme-color" content="#050014" />
-  <link rel="manifest" href="manifest.webmanifest" />
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#050014">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>Dime quién canta — v6.0 Stable Audio Core</title>
+  <link rel="manifest" href="manifest.webmanifest?v=60">
+  <link rel="stylesheet" href="style.css?v=60">
 </head>
 <body>
-  <div class="app-shell">
-    <div class="bg-grid"></div>
-    <div class="laser laser-a"></div><div class="laser laser-b"></div><div class="orb orb-a"></div><div class="orb orb-b"></div>
+<div class="app-shell">
+  <div class="bg-grid"></div><div class="laser laser-a"></div><div class="laser laser-b"></div><div class="orb orb-a"></div><div class="orb orb-b"></div>
+  <header class="topbar">
+    <button id="homeBtn" class="ghost" aria-label="Inicio">⌂</button>
+    <div class="brand-mini"><img src="logo.svg" alt="Dime quién canta"><span>STABLE AUDIO v6.0</span></div>
+    <div class="wallet"><span id="coins">650</span> 🪙 <span id="gems">35</span> 💎</div>
+  </header>
+  <main>
+    <section id="screenIntro" class="screen intro-screen active">
+      <div class="stage-lights"></div><img class="logo-hero" src="logo.svg" alt="Dime quién canta">
+      <p class="tagline">Escucha 10 segundos. Responde. Demuestra quién sabe más.</p>
+      <div class="equalizer"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <button id="enterBtn" class="primary pulse">Entrar al concurso</button>
+      <p class="legal-note">La v6 usa un catálogo estático validado automáticamente en GitHub para evitar búsquedas musicales durante cada ronda.</p>
+    </section>
 
-    <header class="topbar">
-      <button class="ghost" id="homeBtn">⌂</button>
-      <div class="brand-mini"><img src="logo.svg" alt="Dime quién canta"/><span>FINAL BETA v5.1</span></div>
-      <div class="wallet"><span id="coins">0</span> 🪙 <span id="gems">0</span> 💎</div>
-    </header>
+    <section id="screenHome" class="screen">
+      <div class="hero-card glass"><div><p class="eyebrow">DIME QUIÉN CANTA</p><h1>Concurso musical 80s · 90s</h1><p>v6.0 con precarga, recuperación automática y catálogo validado.</p></div><div class="dj-mic">🎙️</div></div>
+      <div class="quick-actions"><button class="primary big" data-screen="Modes">▶ Jugar ahora</button><button id="dailyBtn" class="secondary big">🏆 Campeón del día</button></div>
+      <div id="mainMenu" class="menu-grid"></div>
+      <article class="news glass"><h3>⚡ Evento activo</h3><p id="eventText"></p></article>
+    </section>
 
-    <main>
-      <section id="screenIntro" class="screen active intro-screen">
-        <div class="stage-lights"></div>
-        <img class="logo-hero" src="logo.svg" alt="Dime quién canta" />
-        <p class="tagline">Escucha 10 segundos. Responde. Demuestra quién sabe más.</p>
-        <div class="equalizer"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
-        <button class="primary pulse" id="enterBtn">Entrar al concurso</button>
-        <a class="tiny-link" href="presentacion.html">Ver presentación del proyecto</a>
-        <p class="legal-note">Música real mediante previews oficiales en tiempo real. No se incluyen canciones comerciales dentro del paquete.</p>
-      </section>
+    <section id="screenModes" class="screen"><p class="eyebrow">ELIGE RETO</p><h2>Modos de juego</h2><div id="modesGrid" class="cards-grid"></div></section>
 
-      <section id="screenHome" class="screen home-screen">
-        <div class="hero-card glass">
-          <div>
-            <p class="eyebrow">DIME QUIÉN CANTA</p>
-            <h1>Concurso musical 80s · 90s</h1>
-            <p>Beta final v5.1 con reproducción automática tras entrar al concurso, modos, carrera, eventos, colección, perfil, tienda, logros y música real.</p>
-          </div>
-          <div class="dj-mic">🎙️</div>
-        </div>
-        <div class="quick-actions">
-          <button class="primary big" data-quick="classic">▶ Jugar ahora</button>
-          <button class="secondary" id="dailyBtn">🏆 Campeón del día</button>
-        </div>
-        <nav class="menu-grid" id="mainMenu"></nav>
-        <div class="news glass">
-          <h3>🎉 Evento activo</h3>
-          <p id="eventText">Especial 80 vs 90 · doble XP en partidas perfectas.</p>
-        </div>
-      </section>
+    <section id="screenGame" class="screen">
+      <div class="game-head"><div><p id="modeName" class="eyebrow">¿QUIÉN CANTA?</p><h2 id="roundTitle">Ronda 1/10</h2></div><div class="scorebox"><span id="score">0</span><small>puntos</small></div></div>
+      <div class="play-card glass"><div id="timerRing" class="timer-ring"><span id="timerText">10</span></div><div id="vinyl" class="vinyl"><div></div></div><p id="statusText" class="status">Preparando catálogo validado…</p><div class="powerups"><button id="fiftyBtn">50:50</button><button id="replayBtn">Replay</button><button id="timeBtn">+5s</button></div></div>
+      <button id="retryCatalog" class="primary big hidden">Reintentar canción</button>
+      <div id="answers" class="answers"></div>
+      <div id="textAnswerBox" class="text-answer hidden"><input id="textAnswer" autocomplete="off" placeholder="Escribe la respuesta"><button id="sendTextAnswer">Responder</button></div>
+      <div id="reveal" class="reveal hidden"></div>
+      <audio id="audio" preload="auto" playsinline></audio>
+    </section>
 
-      <section id="screenModes" class="screen">
-        <h2>Modos de juego</h2>
-        <div id="modesGrid" class="cards-grid"></div>
-      </section>
-
-      <section id="screenGame" class="screen game-screen">
-        <div class="game-head">
-          <div><p class="eyebrow" id="modeName">Modo</p><h2 id="roundTitle">Ronda 1/10</h2></div>
-          <div class="scorebox"><span id="score">0</span><small>puntos</small></div>
-        </div>
-        <div class="play-card glass">
-          <div class="timer-ring" id="timerRing"><span id="timerText">10</span></div>
-          <div class="vinyl" id="vinyl"><div></div></div>
-          <div class="status" id="statusText">Preparando preview real…</div>
-          <audio id="audio" preload="auto" playsinline></audio>
-          <div class="powerups">
-            <button id="fiftyBtn">50:50</button><button id="replayBtn">Replay</button><button id="timeBtn">+5s</button>
-          </div>
-        </div>
-        <div id="answers" class="answers"></div>
-        <div id="textAnswerBox" class="text-answer hidden"><input id="textAnswer" placeholder="Escribe artista o canción"/><button id="sendTextAnswer">Responder</button></div>
-        <div id="reveal" class="reveal hidden"></div>
-      </section>
-
-      <section id="screenResults" class="screen results-screen">
-        <h2>Resultado</h2>
-        <div class="result-ring"><span id="finalScore">0</span><small>puntos</small></div>
-        <div id="resultStats" class="stats-grid"></div>
-        <button class="primary" id="againBtn">Jugar otra vez</button>
-        <button class="secondary" id="backHomeBtn">Volver al menú</button>
-      </section>
-
-      <section id="screenProfile" class="screen"><h2>Perfil</h2><div id="profilePanel" class="profile-panel"></div></section>
-      <section id="screenCareer" class="screen"><h2>Camino a la fama</h2><div id="careerPanel" class="career-path"></div></section>
-      <section id="screenCollection" class="screen"><h2>Colección musical</h2><div id="collectionPanel" class="cards-grid"></div></section>
-      <section id="screenEvents" class="screen"><h2>Eventos y temporadas</h2><div id="eventsPanel" class="cards-grid"></div></section>
-      <section id="screenShop" class="screen"><h2>Tienda visual</h2><div id="shopPanel" class="cards-grid"></div></section>
-      <section id="screenRanking" class="screen"><h2>Clasificaciones</h2><div id="rankingPanel" class="ranking-panel"></div></section>
-      <section id="screenSettings" class="screen"><h2>Ajustes</h2><div id="settingsPanel" class="settings-panel"></div></section>
-    </main>
-  </div>
-
-  <script src="app.js"></script>
-</body>
-</html>
+    <section id="screenResults" class="screen"><p class="eyebrow">RESULTADO</p><h2>Fin de la partida</h2><div class="result-ring"><span id="finalScore">0</span><small>puntos</small></div><div id="resultStats" class="stats-grid"></div><div class="quick-actions"><button id="againBtn" class="primary big">Jugar otra vez</button><button id="backHomeBtn" class="secondary big">Volver al menú</button></div></section>
+    <section id="screenProfile" class="screen"><p class="eyebrow">JUGADOR</p><h2>Perfil</h2><div id="profilePanel" class="profile-panel"></div></section>
+    <section id="screenCareer" class="screen"><p class="eyebrow">PROGRESIÓN</p><h2>Camino a la fama</h2><div id="careerPanel" class="career-path"></div></section>
+    <section id="screenCollection" class="screen"><p class="eyebrow">DESCUBRIMIENTOS</p><h2>Colección musical</h2><div id="collectionPanel" class="cards-grid"></div></section>
+    <section id="screenEvents" class="screen"><p class="eyebrow">TEMPORADA</p><h2>Eventos y temporadas</h2><div id="eventsPanel" class="cards-grid"></div></section>
+    <section id="screenShop" class="screen"><p class="eyebrow">PERSONALIZACIÓN</p><h2>Tienda visual</h2><div id="shopPanel" class="cards-grid"></div></section>
+    <section id="screenRanking" class="screen"><p class="eyebrow">COMPETICIÓN</p><h2>Clasificaciones</h2><div id="rankingPanel" class="ranking-panel"></div></section>
+    <section id="screenSettings" class="screen"><p class="eyebrow">PREFERENCIAS</p><h2>Ajustes</h2><div id="settingsPanel" class="settings-panel"></div></section>
+  </main>
+</div>
+<script src="app.js?v=60" defer></script>
+</body></html>

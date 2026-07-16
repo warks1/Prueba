@@ -1,4 +1,4 @@
-# Dime quién canta — v6.0 Stable Audio Core
+# Dime quién canta — v6.2 Visual Edition
 
 Esta versión conserva los modos, perfil, carrera, colección, eventos, tienda, ranking, logros y guardado local de la beta anterior, pero cambia el sistema musical.
 
@@ -10,7 +10,7 @@ Las canciones ya no se buscan durante cada ronda. El workflow de GitHub genera `
 
 Sube **todo el contenido** de esta carpeta a la raíz del repositorio, incluyendo `.github/workflows/refresh-catalog.yml` y `scripts/build-catalog.mjs`. Después abre la pestaña **Actions** y ejecuta `Actualizar catálogo musical`. El workflow también se ejecuta automáticamente tras subir los archivos y una vez al día.
 
-La primera ejecución debe dejar `catalog-cache.json` con canciones. La página mostrará `STABLE AUDIO v6.0` en la cabecera.
+La primera ejecución debe dejar `catalog-cache.json` con canciones. La página mostrará `STABLE AUDIO v6.2` en la cabecera.
 
 ## Nota legal
 

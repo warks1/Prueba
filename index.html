@@ -6,16 +6,16 @@
   <meta name="theme-color" content="#050014">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <title>Dime quién canta — v6.0 Stable Audio Core</title>
-  <link rel="manifest" href="manifest.webmanifest?v=60">
-  <link rel="stylesheet" href="style.css?v=60">
+  <title>Dime quién canta — v6.2 Visual Edition</title>
+  <link rel="manifest" href="manifest.webmanifest?v=62">
+  <link rel="stylesheet" href="style.css?v=62">
 </head>
 <body>
 <div class="app-shell">
   <div class="bg-grid"></div><div class="laser laser-a"></div><div class="laser laser-b"></div><div class="orb orb-a"></div><div class="orb orb-b"></div>
   <header class="topbar">
     <button id="homeBtn" class="ghost" aria-label="Inicio">⌂</button>
-    <div class="brand-mini"><img src="logo.svg" alt="Dime quién canta"><span>STABLE AUDIO v6.0</span></div>
+    <div class="brand-mini"><img src="logo.svg" alt="Dime quién canta"><span>VISUAL EDITION v6.2</span></div>
     <div class="wallet"><span id="coins">650</span> 🪙 <span id="gems">35</span> 💎</div>
   </header>
   <main>
@@ -28,10 +28,13 @@
     </section>
 
     <section id="screenHome" class="screen">
-      <div class="hero-card glass"><div><p class="eyebrow">DIME QUIÉN CANTA</p><h1>Concurso musical 80s · 90s</h1><p>v6.0 con precarga, recuperación automática y catálogo validado.</p></div><div class="dj-mic">🎙️</div></div>
-      <div class="quick-actions"><button class="primary big" data-screen="Modes">▶ Jugar ahora</button><button id="dailyBtn" class="secondary big">🏆 Campeón del día</button></div>
+      <div class="hero-card glass">
+        <div class="hero-copy"><div class="live-pill"><span></span> EN DIRECTO</div><p class="eyebrow">DIME QUIÉN CANTA</p><h1>Tu escenario.<br><em>Tu música.</em></h1><p>Reta tus oídos con los grandes éxitos de los 80 y 90.</p><div class="hero-stats"><span><b>15</b> modos</span><span><b>56</b> canciones</span><span><b>∞</b> diversión</span></div></div>
+        <div class="hero-visual"><div class="speaker speaker-left"><i></i><i></i></div><div class="hero-record"><div class="record-label">DQC</div></div><div class="speaker speaker-right"><i></i><i></i></div><div class="hero-glow"></div></div>
+      </div>
+      <div class="quick-actions"><button class="primary big play-now" data-screen="Modes"><span class="play-icon">▶</span><span>Jugar ahora<small>Elige tu desafío</small></span></button><button id="dailyBtn" class="secondary big daily-card"><span>🏆</span><span>Campeón del día<small>Reto exclusivo</small></span></button></div><div class="section-heading"><div><p class="eyebrow">EXPLORA</p><h3>Todo tu mundo musical</h3></div><span class="section-chip">NUEVO DISEÑO</span></div>
       <div id="mainMenu" class="menu-grid"></div>
-      <article class="news glass"><h3>⚡ Evento activo</h3><p id="eventText"></p></article>
+      <article class="news glass"><div class="event-icon">⚡</div><div><p class="eyebrow">EVENTO ACTIVO</p><h3>Duelo de décadas</h3><p id="eventText"></p></div><button class="event-arrow" data-screen="Events">›</button></article>
     </section>
 
     <section id="screenModes" class="screen"><p class="eyebrow">ELIGE RETO</p><h2>Modos de juego</h2><div id="modesGrid" class="cards-grid"></div></section>
@@ -56,5 +59,5 @@
     <section id="screenSettings" class="screen"><p class="eyebrow">PREFERENCIAS</p><h2>Ajustes</h2><div id="settingsPanel" class="settings-panel"></div></section>
   </main>
 </div>
-<script src="app.js?v=60" defer></script>
+<script src="app.js?v=62" defer></script>
 </body></html>

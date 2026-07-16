@@ -1,6 +1,6 @@
 /* DIME QUIÉN CANTA — FINAL BETA
    Real music previews via Apple/iTunes Search API JSONP. No commercial audio is bundled. */
-const BUILD='V6.0-STABLE-AUDIO-CORE';
+const BUILD='V6.2-VISUAL-EDITION';
 const $=s=>document.querySelector(s), $$=s=>Array.from(document.querySelectorAll(s));
 const screens=['Intro','Home','Modes','Game','Results','Profile','Career','Collection','Events','Shop','Ranking','Settings'];
 const storeKey='dqc_final_beta_v5';
@@ -33,7 +33,7 @@ const catalog=[
 ].map((x,i)=>({id:i,artist:x[0],title:x[1],year:x[2],decade:x[2]<1990?'80':'90',genre:x[3],country:x[4],difficulty:Math.min(5,Math.max(1,Math.round((2020-x[2])/12)))}));
 const achievements=[['first','Primer acierto','Consigue tu primer acierto'],['ten','Diez canciones','Acierta 10 canciones'],['hundred','Cien canciones','Acierta 100 canciones'],['perfect','Partida perfecta','Completa una partida sin fallar'],['streak10','Racha eléctrica','10 aciertos seguidos'],['daily','Campeón del día','Completa el reto diario'],['collector','Coleccionista','Descubre 20 artistas'],['legend','Leyenda','Supera 10.000 puntos']];
 const career=['Ensayo','Karaoke de barrio','Pub musical','Sala de conciertos','Festival','Gran estadio','Gira mundial','Hall of Fame'];
-function renderHome(){const m=$('#mainMenu');m.innerHTML=menu.map(x=>`<button class="menu-tile" data-screen="${x[3]}"><div class="ico">${x[1]}</div><b>${x[0]}</b><span>${x[2]}</span></button>`).join('');$$('[data-screen]').forEach(b=>b.onclick=()=>show(b.dataset.screen));$('#eventText').textContent=`Especial ${new Date().getDay()%2?'80 vs 90':'Pop & Rock'} · ranking diario · recompensas dobles.`;}
+function renderHome(){const m=$('#mainMenu');m.innerHTML=menu.map((x,i)=>`<button class="menu-tile tile-${i+1}" data-screen="${x[3]}"><div class="tile-top"><div class="ico">${x[1]}</div><span class="tile-arrow">↗</span></div><b>${x[0]}</b><span>${x[2]}</span><div class="tile-shine"></div></button>`).join('');$$('[data-screen]').forEach(b=>b.onclick=()=>show(b.dataset.screen));$('#eventText').textContent=`Especial ${new Date().getDay()%2?'80 vs 90':'Pop & Rock'} · ranking diario · recompensas dobles.`;}
 function renderModes(){const g=$('#modesGrid');g.innerHTML=modes.map(m=>`<article class="card"><span class="chip">${m.icon} ${m.clip}s</span><h3>${m.name}</h3><p>${m.desc}</p><button class="primary" data-mode="${m.id}">Jugar</button></article>`).join('');$$('[data-mode]').forEach(b=>b.onclick=()=>startGame(b.dataset.mode));}
 function pickCatalog(mode){let arr=[...catalog];if(mode.decade)arr=arr.filter(s=>s.decade===mode.decade);if(mode.daily){let seed=state.dailySeed.split('-').join('');arr=arr.filter((_,i)=>(i+Number(seed.slice(-2)))%3!==0)}return shuffle(arr);}
 function shuffle(a){return a.map(v=>[Math.random(),v]).sort((x,y)=>x[0]-y[0]).map(x=>x[1])}
